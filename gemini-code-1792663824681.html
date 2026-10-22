@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ma Carte de Rabat</title>
+  
+  <!-- CSS de Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    #map {
+      height: calc(100vh - 70px);
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Carte interactive - Campus IAV Rabat</h1>
+  </header>
+
+  <div id="map"></div>
+
+  <!-- JavaScript de Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // Initialisation de la carte centrée sur Rabat (Latitude, Longitude, Zoom)
+    const map = L.map('map').setView([34.0209, -6.8416], 15);
+
+    // Ajout du fond de carte OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Ajout d'un marqueur pour l'IAV Rabat
+    const marker = L.marker([34.0209, -6.8416]).addTo(map);
+    marker.bindPopup("<b>IAV Hassan II</b><br>Rabat").openPopup();
+  </script>
+
+</body>
+</html>
