@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ma Carte Interactive Leaflet</title>
+  <title>Ma Carte Interactive - IAV Rabat</title>
   
-  <!-- CSS de Leaflet (requis) -->
+  <!-- CSS de Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
-    /* Style de base pour la page et la carte */
     body {
       margin: 0;
       padding: 0;
@@ -22,7 +21,7 @@
       padding: 1rem;
     }
     #map {
-      height: calc(100vh - 70px); /* Prend toute la hauteur restante */
+      height: calc(100vh - 70px);
       width: 100%;
     }
   </style>
@@ -30,31 +29,41 @@
 <body>
 
   <header>
-    <h1>Mon Site Web avec Leaflet JS</h1>
+    <h1>Carte interactive - Campus IAV Rabat</h1>
   </header>
 
-  <!-- Élément HTML qui contiendra la carte -->
   <div id="map"></div>
 
-  <!-- JavaScript de Leaflet (requis) -->
+  <!-- JavaScript de Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script>
-    // 1. Initialiser la carte (Coordonnées [Latitude, Longitude], Niveau de zoom)
-    // Exemple : Paris (48.8566, 2.3522)
-    const map = L.map('map').setView([48.8566, 2.3522], 13);
+    // 1. Initialiser la carte centrée sur Rabat
+    const map = L.map('map').setView([34.0209, -6.8416], 15);
 
-    // 2. Ajouter les tuiles d'arrière-plan OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // 2. Ajouter les tuiles d'arrière-plan CartoDB (sans blocage OpenStreetMap)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 19,
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '© CARTO'
     }).addTo(map);
 
-    // 3. Ajouter un marqueur à la carte
-    const marker = L.marker([48.8566, 2.3522]).addTo(map);
-
-    // 4. Ajouter une bulle d'information (Popup)
-    marker.bindPopup("<b>Bonjour !</b><br>Ceci est Paris.").openPopup();
+    // 3. Charger et afficher le fichier GeoJSON
+    fetch('departement.geojson')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: function (feature) {
+            return { color: "#ff7800", weight: 2, fillOpacity: 0.4 };
+          },
+          onEachFeature: function (feature, layer) {
+            // Si votre GeoJSON contient une propriété de nom, l'affiche dans un popup
+            if (feature.properties && feature.properties.nom) {
+              layer.bindPopup("<b>Département : </b>" + feature.properties.nom);
+            }
+          }
+        }).addTo(map);
+      })
+      .catch(error => console.error('Erreur lors du chargement du GeoJSON :', error));
   </script>
 
 </body>
