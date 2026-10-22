@@ -41,10 +41,10 @@
     // 1. Initialiser la carte centrée sur Rabat
     const map = L.map('map').setView([34.0209, -6.8416], 15);
 
-    // 2. Ajouter les tuiles d'arrière-plan CartoDB (sans blocage OpenStreetMap)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // 2. Ajouter un fond de carte Esri gratuit (sans clé API)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 19,
-      attribution: '© CARTO'
+      attribution: 'Tiles &copy; Esri'
     }).addTo(map);
 
     // 3. Charger et afficher le fichier GeoJSON
@@ -56,7 +56,6 @@
             return { color: "#ff7800", weight: 2, fillOpacity: 0.4 };
           },
           onEachFeature: function (feature, layer) {
-            // Si votre GeoJSON contient une propriété de nom, l'affiche dans un popup
             if (feature.properties && feature.properties.nom) {
               layer.bindPopup("<b>Département : </b>" + feature.properties.nom);
             }
