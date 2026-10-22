@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Site Principal - Rabat</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      height: 40px;
+    }
+    /* La balise iframe va occuper tout le reste de l'écran sans blocage */
+    iframe {
+      width: 100%;
+      height: calc(100vh - 60px);
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Carte interactive du Campus IAV Rabat</h2>
+  </header>
+
+  <!-- Intégration de la page iav.html à l'intérieur de index.html -->
+  <iframe src="iav.html"></iframe>
+
+</body>
+</html>
